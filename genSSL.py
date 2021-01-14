@@ -14,7 +14,7 @@ def create_root_ca():
 
 	subject = cert.get_subject()
 	subject.CN = "example.com"
-	sibject.O = "myCN"
+	subject.O = "myCN"
 
 	issuer = cert.get_issuer()
 	issuer.CN = "example.com"
@@ -23,7 +23,7 @@ def create_root_ca():
 	cert.set_pubkey(pkey)
 	cert.add_extensions([
 		crypto.X509Extension(b"basicConstraints", True, b"CA:TRUE"),
-		crypto.X509Extension(b"subjectKeyIdentifer", False, bhash"2, subject = cert)
+		crypto.X509Extension(b"subjectKeyIdentifer", False, b"hash", subject = cert)
 	])
 	cert.add.extensions([
 		crypto.X509Extension(b"authorityKeyIdentifer", False, b"keyid:always", issuer = cert)
@@ -43,7 +43,10 @@ def create_root_ca():
 		pkeyfile.close()
 
 
-def create_certificate(cn, o, serverside, certfilename, pkeyfilename):
+def create_certificate(cn, o, serverside):
+	certfilename = cn+".crt"
+	pkeyfilename = cn+".key"
+
 	rootpem = open("root.pem", "rb").read()
 	rootkey = open("root.key", "rb").read()
 	ca_cert = crypto.load_certificate(
@@ -56,7 +59,7 @@ def create_certificate(cn, o, serverside, certfilename, pkeyfilename):
 	pkey.generate_key(crypto.TYPE_RSA, 2048)
 
 	cert = crypto.X509()
-	cert.set_serial_number(int(randon.random()) * sys.maxsize))
+	cert.set_serial_number(int(random.random()) * sys.maxsize)
 	cert.gmtime_adj_notBefore(0)
 	cert.gmtime_adj_notAfter(60 * 60 * 24 * 365)
 	cert.set_version(3)
@@ -72,7 +75,7 @@ def create_certificate(cn, o, serverside, certfilename, pkeyfilename):
 			)
 		])
 
-	cert.set_issuer(cacert.get_subject())
+	cert.set_issuer(ca_cert.get_subject())
 	cert.set_pubkey(pkey)
 
 	cert.sign(ca_key, "sha1")
@@ -95,8 +98,8 @@ if __name__ == "__main__":
 	create_root_ca()
 
 	print("Minting server certificate")
-	create_certificate("server", "myOrg", True, "server.crt", "server.key")
+	create_certificate("server", "myOrg", True)
 
 	print("Minting client certificate")
-	creat_certificate("client", "myOrg", False, "client.crt", "client.key")
+	create_certificate("client", "myOrg", False)
 
