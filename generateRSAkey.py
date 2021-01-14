@@ -1,11 +1,19 @@
 '''
 Generate RSA keys
 CT5046
+Andrew Carr
 
-https://www.pycryptodome.org/en/latest/src/examples.html#generate-an-rsa-key
-https://stackoverflow.com/questions/56923762/crypto-cipher-aes-mode-eax-encrypt-and-digest-error-argument-2-must-be-bytes-n
+Tested and working on:
+- Windows 10 with Python 3.9.1
+- Windows 10 WSL Ubunbu with 3.8.5
 
-The Crypto module must be pycryptodome (not pycrypto, and it won't run it both are installed)
+Pre-req's:
+- make sure pycrypto is NOT installed (pip uninstall pycrypto)
+- pycryptodome (pip install pycryptodome)
+
+Credit:
+    https://www.pycryptodome.org/en/latest/src/examples.html#generate-an-rsa-key
+    https://stackoverflow.com/questions/56923762/crypto-cipher-aes-mode-eax-encrypt-and-digest-error-argument-2-must-be-bytes-n
 '''
 
 from Crypto.PublicKey import RSA
