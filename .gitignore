@@ -1,1 +1,12 @@
 .vscode/settings.json
+cert.crt
+cert.key
+ca-key.pem
+ca.pem
+ca.srl
+cert-signed.crt
+cert.csr
+signing.key
+signing.pub
+plaintext.txt.sha256
+plaintext.txt
